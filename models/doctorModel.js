@@ -4,7 +4,6 @@ const doctorSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "A doctor must have a name"],
-    unique: true,
     trim: true,
     maxlength: [40, "A doctor name must have less or equal then 40 characters"],
     minlength: [5, "A doctor name must have more or equal then 10 characters"],
