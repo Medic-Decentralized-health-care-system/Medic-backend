@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+var validator = require("validator");
 
 const doctorSchema = new mongoose.Schema({
   name: {
@@ -27,14 +28,7 @@ const doctorSchema = new mongoose.Schema({
     required: [true, "A doctor must have a email"],
     unique: true,
     trim: true,
-    maxlength: [
-      40,
-      "A doctor email must have less or equal then 40 characters",
-    ],
-    minlength: [
-      10,
-      "A doctor email must have more or equal then 10 characters",
-    ],
+    validate: [validator.isEmail, "Please provide a valid email"],
   },
   degree: {
     type: String,
@@ -43,6 +37,10 @@ const doctorSchema = new mongoose.Schema({
   },
   cloudinaryId: String,
   image: String,
+  isDoctor: {
+    type: Boolean,
+    default: true,
+  },
   specialities: {
     type: [String],
     required: [true, "A doctor must have a speciality"],
