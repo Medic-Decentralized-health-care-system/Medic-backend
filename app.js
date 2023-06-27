@@ -3,6 +3,8 @@ const express = require("express");
 const cors = require("cors");
 const authRoute = require("./routes/authRoute");
 const doctorRoute = require("./routes/doctorRoute");
+const commonRoute = require("./routes/commonRoute");
+// const ipfsRoute = require("./routes/ipfsRoute");
 const app = express();
 
 app.use(morgan("dev"));
@@ -12,5 +14,7 @@ app.use(cors("*"));
 
 app.use("/api/auth", authRoute);
 app.use("/api/doctors", doctorRoute);
+app.use("/api/common", commonRoute);
+// app.use("/api/ipfs", ipfsRoute);
 
 module.exports = app;

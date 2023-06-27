@@ -55,6 +55,10 @@ const patientSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  walletAddress: {
+    type: String,
+    default: "",
+  },
   password: {
     type: String,
     required: true,

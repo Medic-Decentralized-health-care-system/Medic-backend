@@ -58,6 +58,10 @@ const doctorSchema = new mongoose.Schema({
     required: [true, "A doctor must have a password"],
     trim: true,
   },
+  walletAddress: {
+    type: String,
+    default: "",
+  },
   location: {
     type: {
       type: String,
