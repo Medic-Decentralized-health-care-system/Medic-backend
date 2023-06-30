@@ -118,3 +118,27 @@ exports.setAvailability = async (req, res) => {
     });
   }
 };
+
+exports.getAvailability = async (req, res) => {
+  try {
+    const { doctorId } = req.params;
+    const data = await doctorAvailability.findOne({ doctorId });
+    if (!data) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No availability found",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      data: {
+        data,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};

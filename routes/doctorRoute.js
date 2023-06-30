@@ -4,6 +4,7 @@ const {
   getDoctorBySpecialties,
   getDoctorByDistanceandSpecialities,
   setAvailability,
+  getAvailability,
 } = require("../controllers/doctorController");
 const router = express.Router();
 
@@ -17,4 +18,5 @@ router.post(
   getDoctorByDistanceandSpecialities
 );
 router.post("/doctor/setavailabilityofdoctor/", setAvailability);
+router.get("/getdoctoravailability/:doctorId", getAvailability);
 module.exports = router;
