@@ -1,7 +1,11 @@
 const express = require("express");
-const { setLocation } = require("../controllers/commonController");
+const {
+  setLocation,
+  setWalletAddress,
+} = require("../controllers/commonController");
 const router = express.Router();
 
-router.route("/setlocation/:id").patch(setLocation);
+router.patch("/setlocation/:id", setLocation);
+router.post("/setwalletaddress/", setWalletAddress);
 
 module.exports = router;

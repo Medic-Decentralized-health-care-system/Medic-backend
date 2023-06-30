@@ -1,3 +1,5 @@
+const doctorAvailability = require("../models/doctorAvailabilityModel");
+const doctor = require("../models/doctorModel");
 const Doctor = require("../models/doctorModel");
 
 exports.nearByDoctors = async (req, res) => {
@@ -76,6 +78,37 @@ exports.getDoctorByDistanceandSpecialities = async (req, res) => {
       results: doctors.length,
       data: {
         doctors,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+exports.setAvailability = async (req, res) => {
+  const { doctorId, slots, fees } = req.body;
+
+  try {
+    let availability = await doctorAvailability.findOne({ doctorId });
+
+    if (!availability) {
+      availability = await doctorAvailability.create({
+        doctorId,
+        slots,
+        fees,
+      });
+    } else {
+      availability.slots = slots;
+      await availability.save();
+    }
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        availability,
       },
     });
   } catch (err) {

@@ -4,6 +4,7 @@ const cors = require("cors");
 const authRoute = require("./routes/authRoute");
 const doctorRoute = require("./routes/doctorRoute");
 const commonRoute = require("./routes/commonRoute");
+const patientRoute = require("./routes/patientRoutes");
 // const ipfsRoute = require("./routes/ipfsRoute");
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors("*"));
 app.use("/api/auth", authRoute);
 app.use("/api/doctors", doctorRoute);
 app.use("/api/common", commonRoute);
+app.use("/api/patient", patientRoute);
 // app.use("/api/ipfs", ipfsRoute);
 
 module.exports = app;
