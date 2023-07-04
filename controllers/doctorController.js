@@ -1,3 +1,4 @@
+const Appointment = require("../models/appointmentModel");
 const doctorAvailability = require("../models/doctorAvailabilityModel");
 const doctor = require("../models/doctorModel");
 const Doctor = require("../models/doctorModel");
@@ -131,6 +132,55 @@ exports.getAvailability = async (req, res) => {
     }
     res.status(200).json({
       status: "success",
+      data: {
+        data,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+exports.getUpcompingAppointments = async (req, res) => {
+  try {
+    const { doctorId } = req.params;
+    const data = await Appointment.find({ doctorId, status: "Booked" });
+    if (!data) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No availability found",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      results: data.length,
+      data: {
+        data,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+exports.getRecentAppointments = async (req, res) => {
+  try {
+    const { doctorId } = req.params;
+    const data = await Appointment.find({ doctorId, status: "Done" });
+    if (!data) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No availability found",
+      });
+    }
+    res.status(200).json({
+      status: "success",
+      results: data.length,
       data: {
         data,
       },

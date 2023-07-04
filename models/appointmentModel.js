@@ -19,10 +19,14 @@ const appoitmentSchema = new mongoose.Schema({
     type: String,
     required: [true, "An appointment must have a end time"],
   },
+  date: {
+    type: String,
+    // required: [true, "An appointment must have a date"],
+  },
   status: {
     type: String,
     enum: ["Booked", "Done", "Missed"],
-    default: "pending",
+    default: "Booked",
   },
   createdAt: {
     type: String,
