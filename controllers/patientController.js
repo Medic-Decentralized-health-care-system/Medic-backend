@@ -4,7 +4,7 @@ const doctorAvailabilityModel = require("../models/doctorAvailabilityModel");
 
 exports.setAppointment = async (req, res, next) => {
   try {
-    const { patientId, doctorId, startTime, endTime } = req.body;
+    const { patientId, doctorId, patientName, startTime, endTime } = req.body;
     const doctorAvailability = await doctorAvailabilityModel.findOne({
       doctorId: doctorId,
     });
@@ -20,6 +20,7 @@ exports.setAppointment = async (req, res, next) => {
     const appointment = await appointmentModel.create({
       patientId,
       doctorId,
+      patientName,
       startTime,
       endTime,
       status: "Booked",

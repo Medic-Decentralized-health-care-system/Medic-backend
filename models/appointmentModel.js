@@ -11,6 +11,10 @@ const appoitmentSchema = new mongoose.Schema({
     ref: "Doctor",
     required: [true, "An appointment must have a doctor"],
   },
+  patientName: {
+    type: String,
+    required: [true, "An appointment must have a patient name"],
+  },
   startTime: {
     type: String,
     required: [true, "An appointment must have a start time"],
