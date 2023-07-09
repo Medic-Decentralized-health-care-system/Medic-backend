@@ -1,9 +1,10 @@
 const express = require("express");
-const { setAppointment } = require("../controllers/patientController");
 const {
+  setAppointment,
   getPatientUpcomingAppointments,
   getPatientRecentAppointments,
-} = require("../controllers/doctorController");
+  getPatientById,
+} = require("../controllers/patientController");
 const router = express.Router();
 
 router.post("/setappointment/", setAppointment);
@@ -12,4 +13,5 @@ router.get(
   getPatientUpcomingAppointments
 );
 router.get("/getrecentappointments/:patientId", getPatientRecentAppointments);
+router.get("/getpatientbyid/:id", getPatientById);
 module.exports = router;
