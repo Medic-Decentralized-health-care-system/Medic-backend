@@ -239,3 +239,33 @@ exports.appointmentDone = async (req, res) => {
     });
   }
 };
+exports.editDoctorProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // const image = req.file.path;
+    const doctor = await Doctor.findById(id);
+    if (!doctor) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No doctor found",
+      });
+    }
+    doctor.name = req.body.name;
+    doctor.email = req.body.email;
+    doctor.clinicAddress = req.body.clinicAddress;
+    // doctor.image = image.secure_url;
+    // doctor.cloudinaryId = image.public_id;
+    await doctor.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        doctor,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
