@@ -214,3 +214,28 @@ exports.getDoctorById = async (req, res) => {
     });
   }
 };
+exports.appointmentDone = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const appointment = await Appointment.findById(id);
+    if (!appointment) {
+      return res.status(404).json({
+        status: "fail",
+        message: "No appointment found",
+      });
+    }
+    appointment.status = "Done";
+    await appointment.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        appointment,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};

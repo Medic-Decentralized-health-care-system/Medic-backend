@@ -8,6 +8,7 @@ const {
   getUpcompingAppointments,
   getRecentAppointments,
   getDoctorById,
+  appointmentDone,
 } = require("../controllers/doctorController");
 const router = express.Router();
 
@@ -25,4 +26,5 @@ router.get("/getdoctoravailability/:doctorId", getAvailability);
 router.get("/getupcomingappointments/:doctorId", getUpcompingAppointments);
 router.get("/getrecentappointments/:doctorId", getRecentAppointments);
 router.get("/getdoctorbyid/:id", getDoctorById);
+router.put("/completeappointment/:id", appointmentDone);
 module.exports = router;
