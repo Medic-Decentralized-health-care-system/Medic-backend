@@ -1,6 +1,7 @@
 const Patient = require("../models/patientModel");
 const appointmentModel = require("../models/appointmentModel");
 const doctorAvailabilityModel = require("../models/doctorAvailabilityModel");
+const Statistic = require("../models/statisticModel");
 
 exports.setAppointment = async (req, res, next) => {
   try {
@@ -30,6 +31,11 @@ exports.setAppointment = async (req, res, next) => {
     doctorAvailability.bookedSlots.push({
       appointmentId: appointment._id,
     });
+    const statistic = await Statistic.create({
+      patientId,
+      doctorId,
+    });
+    await statistic.save();
     await doctorAvailability.save();
 
     res.status(200).json({
@@ -109,6 +115,44 @@ exports.getPatientById = async (req, res) => {
         message: "No patient found",
       });
     }
+    res.status(200).json({
+      status: "success",
+      data: {
+        patient,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+exports.shareData = async (req, res) => {
+  try {
+    const { id, val } = req.body;
+    const patient = await Patient.findById(id);
+    patient.toShare = val;
+    await patient.save();
+    res.status(200).json({
+      status: "success",
+      data: {
+        patient,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+exports.setOrganization = async (req, res) => {
+  try {
+    const { id, organization } = req.body;
+    const patient = await Patient.findById(id);
+    patient.organization = organization;
+    await patient.save();
     res.status(200).json({
       status: "success",
       data: {

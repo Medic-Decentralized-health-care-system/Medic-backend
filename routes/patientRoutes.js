@@ -4,6 +4,8 @@ const {
   getPatientUpcomingAppointments,
   getPatientRecentAppointments,
   getPatientById,
+  shareData,
+  setOrganization,
 } = require("../controllers/patientController");
 const router = express.Router();
 
@@ -14,4 +16,6 @@ router.get(
 );
 router.get("/getrecentappointments/:patientId", getPatientRecentAppointments);
 router.get("/getpatientbyid/:id", getPatientById);
+router.put("/giveaccestodata/", shareData);
+router.put("/setorganization/", setOrganization);
 module.exports = router;

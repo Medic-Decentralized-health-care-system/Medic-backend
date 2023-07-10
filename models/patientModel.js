@@ -63,6 +63,14 @@ const patientSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  toShare: {
+    type: Boolean,
+    default: false,
+  },
+  organization: {
+    type: String,
+    default: "",
+  },
 });
 
 const patient = mongoose.model("patient", patientSchema);
