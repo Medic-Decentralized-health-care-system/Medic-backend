@@ -102,6 +102,7 @@ exports.setAvailability = async (req, res) => {
       });
     } else {
       availability.slots = slots;
+      availability.fees = fees;
       await availability.save();
     }
 

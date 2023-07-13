@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const bcrypt = require("bcrypt");
 const cloudinary = require("../utils/cloudinaryConfig");
+const Admin = require("../models/adminModel");
 
 dotenv.config();
 const validatePassword = (password) => {
@@ -137,12 +138,46 @@ exports.patientRegister = async (req, res) => {
     });
   }
 };
+exports.adminRegister = async (req ,res) => {
+  try {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.password, salt);
+    const newUser = new Admin({
+      username: req.body.username,
+      email: req.body.email,
+      password: hash,
+      type: req.body.type,
+      tag: req.body.tag,
+      isAdmin: true,
+    });
+    console.log(newUser);
+    await newUser.save();
+    let token = "";
+    if (newUser) {
+      token = jwt.sign({ id: newUser._id }, process.env.JWT);
+      res.cookie("token", token);
+    }
+    res.status(200).json({
+      user: newUser,
+      message: "User has been signed in!",
+      token: token,
+    });
+  } catch (err) {
+    res.status(400).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
 
 exports.login = async (req, res) => {
   try {
-    let user = await Doctor.findOne({ username: req.body.username });
+    let user = await Admin.findOne({ username: req.body.username });
     if (!user) {
-      user = await Patient.findOne({ username: req.body.username });
+      user = await Doctor.findOne({ username: req.body.username });
+      if (!user) {
+        user = await Patient.findOne({ username: req.body.username });
+      }
     }
     console.log(user);
     if (!user) {
