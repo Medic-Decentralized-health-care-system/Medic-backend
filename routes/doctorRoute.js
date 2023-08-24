@@ -22,7 +22,7 @@ router.post(
   "/doctors-within/:distance/center/:latlng/unit/:unit/:specialities",
   getDoctorByDistanceandSpecialities
 );
-router.post("/doctor/setavailabilityofdoctor/", setAvailability);
+router.post("/doctor/setavailabilityofdoctor", setAvailability);
 router.get("/getdoctoravailability/:doctorId", getAvailability);
 router.get("/getupcomingappointments/:doctorId", getUpcompingAppointments);
 router.get("/getrecentappointments/:doctorId", getRecentAppointments);

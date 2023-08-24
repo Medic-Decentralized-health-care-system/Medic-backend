@@ -101,6 +101,7 @@ exports.patientRegister = async (req, res) => {
             "Please provide a strong password with a minimum of 8 characters, including at least 1 letter, 1 number, and 1 special symbol.",
         });
       }
+      console.log(req.body.image);
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.password, salt);
       const image = await cloudinary.uploader.upload(req.file.path);
@@ -138,7 +139,7 @@ exports.patientRegister = async (req, res) => {
     });
   }
 };
-exports.adminRegister = async (req ,res) => {
+exports.adminRegister = async (req, res) => {
   try {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
